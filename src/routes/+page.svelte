@@ -1,2 +1,6 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<svelte:component this={Header}></svelte:component>
+<h1>SALUR</h1>   
+
+<script>
+    import Header from './header.svelte';
+</script>
