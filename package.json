@@ -7,7 +7,8 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"prepare": "svelte-kit sync || echo ''"
+		"prepare": "svelte-kit sync || echo ''",
+		"start": "node server.js"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
@@ -23,6 +24,24 @@
 	},
 	"dependencies": {
 		"@prisma/client": "^6.9.0",
-		"bcryptjs": "^3.0.2"
-	}
+		"bcryptjs": "^3.0.2",
+		"express": "^5.1.0",
+		"node-fetch": "^3.3.2"
+	},
+	"description": "Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).",
+	"main": "server.js",
+	"directories": {
+		"doc": "docs"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Kamizzs/Musicboxd.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Kamizzs/Musicboxd/issues"
+	},
+	"homepage": "https://github.com/Kamizzs/Musicboxd#readme"
 }
