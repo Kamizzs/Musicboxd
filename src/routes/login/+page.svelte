@@ -4,18 +4,17 @@
     let showPassword = false;
     $: passwordType = showPassword ? 'text' : 'password';
 </script>
-ù$$ùù
 <div class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8">
         <div>
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Sign In
+                Se connecter
             </h2>
         </div>
         <form action="?/login" method="POST" class="mt-8 space-y-6">
             <div class="-space-y-px rounded-md shadow-sm">
                 <div>
-                    <label for="username" class="sr-only">Username</label>
+                    <label for="username" class="sr-only">Nom d'utilisateur</label>
                     <input
                         id="username"
                         name="username"
@@ -26,7 +25,7 @@
                     />
                 </div>
                 <div>
-                    <label for="password" class="sr-only">Password</label>
+                    <label for="password" class="sr-only">Mot de passe</label>
                     <input
                         id="password"
                         name="password"
@@ -44,7 +43,7 @@
                         class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                     />
                     <label for="showPassword" class="ml-2 block text-sm text-gray-900">
-                        Show Password
+                        Afficher le mot de passe
                     </label>
                 </div>
             </div>
@@ -58,12 +57,12 @@
                     type="submit"
                     class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Sign In
+                    Se connecter
                 </button>
             </div>
         </form>
         <div class="text-center mt-4">
-            <a href="/register" class="text-indigo-600 hover:text-indigo-500">Register</a>
+            <a href="/register" class="text-indigo-600 hover:text-indigo-500">S'inscrire</a>
         </div>
     </div>
 </div>

@@ -5,38 +5,39 @@
     $: passwordType = showPassword ? 'text' : 'password';
 </script>
 
+
 <div class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-    <div class="w-full max-w-md space-y-8">
+    <div class="bg-slate-50/70 p-6 pl-30 pr-30 rounded">
+        <div class="w-full max-w-md space-y-8">
         <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Register
+            <h2 class="mt-6 text-center text-3xl text-gray-900">
+                Créer un compte
             </h2>
         </div>
-        <form action="?/register" method="POST" class="mt-8 space-y-6">
-            <div class="-space-y-px rounded-md shadow-sm">
-                <div>
-                    <label for="username" class="sr-only">Username</label>
+        <form action="?/register" method="POST" class="mt-8 space-y-4 mb-2 w-100">
+                <div class="mb-4">
+                    <label for="username" class="sr-only">Nom d'utilisateur</label>
                     <input
                         id="username"
                         name="username"
                         type="text"
                         required
                         placeholder="Username"
-                        class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        class="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div>
-                    <label for="password" class="sr-only">Password</label>
+                    <label for="password" class="sr-only">Mot de passe</label>
                     <input
                         id="password"
                         name="password"
                         type={passwordType}
                         required
                         placeholder="Password"
-                        class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        class="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
-                <div class="flex items-center py-5">
+                <div class="flex items-center justify-center py-5">
                     <input
                         type="checkbox"
                         bind:checked={showPassword}
@@ -44,24 +45,12 @@
                         class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                     />
                     <label for="showPassword" class="ml-2 block text-sm text-gray-900">
-                        Show Password
+                        Afficher le mot de passe
                     </label>
                 </div>
-                <div class="flex items-center pt-5">
-                    <input
-                        type="checkbox"
-                        name="admin"
-                        id="admin"
-                        class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                    />
-                    <label for="admin" class="ml-2 block text-sm text-gray-900">
-                        Check if you're an admin
-                    </label>
-                </div>
-            </div>
 
             {#if form?.user}
-                <p class="text-red-500 text-sm">Username is taken.</p>
+                <p class="text-red-500 text-sm">Le nom d'utilisateur est déjà pris</p>
             {/if}
 
             <div>
@@ -69,12 +58,14 @@
                     type="submit"
                     class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Register
+                    S'inscrire
                 </button>
             </div>
         </form>
-        <div class="text-center mt-4">
-            <a href="/login" class="text-indigo-600 hover:text-indigo-500">Sign In</a>
+        <div class="text-center mt-2">
+            <a href="/login" class="text-indigo-600 hover:text-indigo-500">Se connecter</a>
         </div>
     </div>
+    </div>
+
 </div>
