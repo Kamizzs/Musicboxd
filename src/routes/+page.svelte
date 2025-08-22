@@ -1,4 +1,4 @@
-<svelte:component this={Header}></svelte:component>
+<Header></Header>
 
 {#if data.user}
         <h1 class="font-thin text-center text-2xl text-white m-10">Bonjour {data.user.username} ! Note un album stp i beg</h1>
