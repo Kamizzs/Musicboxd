@@ -1,8 +1,10 @@
 <Header></Header>
 
+<div class="flex min-h-screen px-4 py-12 sm:px-6 lg:px-8 flex-col" style="background-image: url('/img/bg-main.png');">
+
 {#if data.user}
-        <h1 class="font-thin text-center text-2xl text-white m-10">Bonjour {data.user.username} ! Note un album stp i beg</h1>
-        <h2 class="font-thin text-xl text-white m-10">Ce qu'on te propose :</h2>
+        <h1 class="text-center text-2xl text-white m-4">Bonjour {data.user.username} ! Note un album stp i beg</h1>
+        <h2 class="font-thin text-xl text-white m-4">Top albums en ce moment :</h2>
         <div class="flex justify-center">
             <div class="flex flex-row flex-wrap items-center">
                 {#if loading}
@@ -13,14 +15,14 @@
                         <p style="color: red;">Erreur: {album.error}</p>
                     {:else}
                         {#each listRandomAlbums.data as album}
-                            <div class="border border-solid glass-effect m-2 w-max text-center flex flex-col items-center">
-                                <h2 class="text-center text-white font-thin text-wrap pr-4 pl-4">{album.title}</h2>
-                                <p class="text-center text-cyan-700 font-bold">{album.artist?.name}</p>
+                            <div class="border border-solid glass-effect m-2 w-72 h-96 text-center flex flex-col items-center justify-around">
+                                <h2 class="text-center text-white font-thin text-wrap pr-4 pl-4 w-full">{album.title}</h2>
+                                <p class="text-center text-cyan-700 font-bold w-full">{album.artist?.name}</p>
                                 {#if album.cover_medium}
                                     <img 
                                         src={album.cover_medium} 
                                         alt="Couverture de l'album" 
-                                        class="m-2 w-70 h-70 object-cover rounded-4xl" 
+                                        class="m-2 w-60 h-60 object-cover rounded-4xl" 
                                     />
                                 {/if}
                             </div>
@@ -38,6 +40,8 @@
         </video>
     </div>
 {/if}
+</div>
+
 
 <script>
     import Header from './header.svelte';

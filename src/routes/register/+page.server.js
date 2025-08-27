@@ -2,28 +2,22 @@ import { redirect, fail } from '@sveltejs/kit';
 import bcrypt from 'bcryptjs';
 import prisma from '$lib/prisma';
 
-const ADMIN_PW = process.env.ADMIN_PW;
-
 export const load = async ({ cookies }) => {
     const sessionData = cookies.get('session');
     if (sessionData) {
-        throw redirect(303, '/profile');
+        throw redirect(303, '/');
     }
     return {};
 };
 
-const register = async ({ request }) => {
+const register = async ({ request, cookies }) => {
     const data = await request.formData();
     const username = data.get('username');
     const password = data.get('password');
-    const admin = data.get('admin');
 
     if (typeof username !== 'string' || typeof password !== 'string' || !username || !password) {
         return fail(400, { error: 'Username and Password must be a string' });
     }
-
-    const isAdmin = admin === 'on' && bcrypt.compareSync(password, ADMIN_PW);
-
     try {
         const existingUser = await prisma.user.findUnique({
             where: { username }
@@ -33,14 +27,10 @@ const register = async ({ request }) => {
             return fail(400, { userExists: true });
         }
 
-        await createUser(username, password, isAdmin);
-
-        if (admin === 'on' && !isAdmin) {
-            return fail(400, { error: 'Wrong admin password' });
-        }
+        await createUser(username, password, cookies);
 
         // Redirection après enregistrement réussi
-        throw redirect(303, '/profile');
+        throw redirect(303, '/');
     } catch (err) {
         // Ne log pas les redirections comme des erreurs
         if (err?.status === 303 && err?.location) {
@@ -64,9 +54,9 @@ async function createRoleIfNotExists(roleName) {
     }
 }
 
-async function createUser(username, password, isAdmin) {
-    const passwordHash = isAdmin ? ADMIN_PW : await bcrypt.hash(password, 10);
-    const roleName = isAdmin ? 'ADMIN' : 'USER';
+async function createUser(username, password, cookies) {
+    const passwordHash = await bcrypt.hash(password, 10);
+    const roleName = 'USER';
 
     await createRoleIfNotExists(roleName);
 
@@ -80,11 +70,20 @@ async function createUser(username, password, isAdmin) {
         data: {
             username,
             passwordHash,
-            isAdmin,
             userAuthToken: crypto.randomUUID(),
             roleId: role.id
         }
     });
+    const user = await prisma.user.findUnique({
+                where: { username }
+            });
+    cookies.set('session', user.userAuthToken, {
+                path: '/',
+                httpOnly: true,
+                sameSite: 'strict',
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 60 * 60 * 24 * 7 // one week
+            });
 
     console.log(`User ${username} registered successfully. Redirecting to profile...`);
 }
