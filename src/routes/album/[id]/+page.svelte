@@ -30,9 +30,30 @@
             <div class="absolute bottom-180 bg-white mask-r-from-80%">
                 <h1 class="font-extrabold text-black text-4xl m-10 mr-50">{album.title} - {album.artist.name}</h1>
             </div>
-            <div class="absolute bg-black mask-t-from-90% mask-b-to-99% mask-r-from-99% mask-l-from-99% w-full flex justify-center">
-                <p>Durée : {album.duration}</p>
-                <p>Genre : {#}</p>
+            <div class="absolute bg-black mask-t-from-90% mask-b-to-99% mask-r-from-99% mask-l-from-99% w-full flex flex-col justify-center p-10">
+                <div class="m-5 w-full">
+                    <p>Genre : {#each album.genres.data as genre} {genre.name} {/each}</p>
+                    <p>Label : {album.label}</p>
+                    <p>Date de sortie : {album.release_date}</p>
+
+                    <div class="m-5 ">
+                        <table class="table-auto w-2/3 text-gray-400">
+                            <thead class="bg-gray-800 uppercase font-medium">
+                            <tr>
+                                <th class="px-6 py-3 text-left tracking-wider">Titres</th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-gray-800">
+                            {#each album.tracks.data as track}
+                                <tr class="even:bg-slate-100 dark:even:bg-slate-900">
+                                    <td></td>
+                                    <td class="text-center">{track.title}</td>
+                                </tr>
+                            {/each}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
         </div>
