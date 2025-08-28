@@ -8,25 +8,26 @@
         <div class="flex justify-center">
             <div class="flex flex-row flex-wrap items-center">
                 {#if loading}
-                <p>Chargement...</p>
-                {/if}
-                {#if listRandomAlbums !== undefined}
+                    <p>Chargement...</p>
+                {:else}
                     {#if listRandomAlbums.error}
-                        <p style="color: red;">Erreur: {album.error}</p>
+                        <p style="color: red;">Erreur: {listRandomAlbums.error}</p>
                     {:else}
-                        {#each listRandomAlbums.data as album}
-                            <div class="border border-solid glass-effect m-2 w-72 h-96 text-center flex flex-col items-center justify-around">
-                                <h2 class="text-center text-white font-thin text-wrap pr-4 pl-4 w-full">{album.title}</h2>
-                                <p class="text-center text-cyan-700 font-bold w-full">{album.artist?.name}</p>
-                                {#if album.cover_medium}
-                                    <img 
-                                        src={album.cover_medium} 
-                                        alt="Couverture de l'album" 
-                                        class="m-2 w-60 h-60 object-cover rounded-4xl" 
-                                    />
-                                {/if}
-                            </div>
-                        {/each}
+                        <div class="flex items-center">
+                            <button onclick={prev} class="px-4 py-2 bg-gray-700 text-white rounded">‹</button>
+
+                            {#each visibleAlbums() as album}
+                                <div class="border border-solid glass-effect m-2 w-72 h-96 text-center flex flex-col items-center justify-around">
+                                    <h2 class="text-center text-white font-thin text-wrap pr-4 pl-4 w-full">{album.title}</h2>
+                                    <p class="text-center text-cyan-700 font-bold w-full">{album.artist?.name}</p>
+                                    {#if album.cover_medium}
+                                        <img src={album.cover_medium} alt="Couverture" class="m-2 w-60 h-60 object-cover rounded-4xl"/>
+                                    {/if}
+                                </div>
+                            {/each}
+
+                            <button onclick={next} class="px-4 py-2 bg-gray-700 text-white rounded">›</button>
+                        </div>
                     {/if}
                 {/if}
             </div>
@@ -48,36 +49,54 @@
 
     let {data} = $props();
 
-    let loading = $state(false);
     let listRandomAlbums = $state([]);
-    
+    let startIndex = $state(0);
+    let loading = $state(false);
+    const visibleCount = 6;
+
     async function get5RandAlbum() {
         loading = true;
-        listRandomAlbums = undefined;
-        
+        listRandomAlbums = [];
+
         try {
-            // Alternative avec corsproxy.io
             const response = await fetch('https://corsproxy.io/?https://api.deezer.com/chart/0/albums');
-            
-            if (!response.ok) {
-                throw new Error(`Erreur HTTP: ${response.status}`);
+            if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+
+            const json = await response.json();
+
+            if (json && Array.isArray(json.data)) {
+                listRandomAlbums = json.data;
+            } else {
+                listRandomAlbums = [];
             }
-            
-            listRandomAlbums = await response.json();
-            listRandomAlbums.data.splice(5,5)
-            console.log('Albums récupéré:', listRandomAlbums);
-            
         } catch (error) {
             console.error('Erreur:', error);
-            listRandomAlbums = { error: `Impossible de récupérer l'album: ${error.message}` };
+            listRandomAlbums = [];
         } finally {
             loading = false;
         }
     }
 
-    get5RandAlbum()
+    get5RandAlbum();
 
+    function next() {
+        if (listRandomAlbums.length === 0) return;
+        startIndex = (startIndex + 1) % listRandomAlbums.length;
+    }
 
+    function prev() {
+        if (listRandomAlbums.length === 0) return;
+        startIndex = (startIndex - 1 + listRandomAlbums.length) % listRandomAlbums.length;
+    }
+
+    function visibleAlbums() {
+        if (listRandomAlbums.length === 0) return [];
+        const result = [];
+        for (let i = 0; i < visibleCount; i++) {
+            result.push(listRandomAlbums[(startIndex + i) % listRandomAlbums.length]);
+        }
+        return result;
+    }
 </script>
 
 <style>
