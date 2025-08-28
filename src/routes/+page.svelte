@@ -3,8 +3,7 @@
 <div class="flex min-h-screen px-4 py-12 sm:px-6 lg:px-8 flex-col" style="background-image: url('/img/bg-main.png');">
 
 {#if data.user}
-        <h1 class="text-center text-2xl text-white m-4">Bonjour {data.user.username} ! Note un album stp i beg</h1>
-        <h2 class="font-thin text-xl text-white m-4">Top albums en ce moment :</h2>
+        <h2 class="text-xl text-white m-4 ml-12">Top albums en ce moment :</h2>
         <div class="flex justify-center">
             <div class="flex flex-row flex-wrap items-center">
                 {#if loading}
@@ -14,19 +13,19 @@
                         <p style="color: red;">Erreur: {listRandomAlbums.error}</p>
                     {:else}
                         <div class="flex items-center">
-                            <button onclick={prev} class="px-4 py-2 bg-gray-700 text-white rounded">‹</button>
+                            <button onclick={prev}><img alt="droite" width="35" height="35" src="img/icones/gauche.png"></button>
 
                             {#each visibleAlbums() as album}
-                                <div class="border border-solid glass-effect m-2 w-72 h-96 text-center flex flex-col items-center justify-around">
+                                <a class="border border-solid glass-effect m-2 w-72 h-96 text-center flex flex-col items-center justify-around" href="/album/{album.id}">
                                     <h2 class="text-center text-white font-thin text-wrap pr-4 pl-4 w-full">{album.title}</h2>
                                     <p class="text-center text-cyan-700 font-bold w-full">{album.artist?.name}</p>
                                     {#if album.cover_medium}
                                         <img src={album.cover_medium} alt="Couverture" class="m-2 w-60 h-60 object-cover rounded-4xl"/>
                                     {/if}
-                                </div>
+                                </a>
                             {/each}
 
-                            <button onclick={next} class="px-4 py-2 bg-gray-700 text-white rounded">›</button>
+                            <button onclick={next}><img alt="droite" width="35" height="35" src="img/icones/droite.png"></button>
                         </div>
                     {/if}
                 {/if}
@@ -97,15 +96,19 @@
         }
         return result;
     }
+
+    function goToAlbum(){
+        console.log("test")
+    }
 </script>
 
 <style>
     .glass-effect {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 32px;
-}
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 32px;
+    }
 </style>
