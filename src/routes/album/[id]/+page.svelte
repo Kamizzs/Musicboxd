@@ -2,6 +2,7 @@
     import { page } from '$app/stores';
     import {onMount} from "svelte";
     import Header from '../../header.svelte';
+    import StarRating from '$lib/components/StarRating.svelte';
 
     let album;
 
@@ -62,6 +63,9 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div>
+                    <StarRating rating={0} max={5}></StarRating>
                 </div>
             </div>
 
