@@ -1,6 +1,7 @@
 <script>
     import { page } from '$app/stores';
     import {onMount} from "svelte";
+    import Header from '../../header.svelte';
 
     let album;
 
@@ -29,20 +30,21 @@
     }
 </style>
 
+<Header></Header>
 <div class="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8 text-white">
     {#if album}
-        <div class="glass-effect min-h-full w-5/6 flex justify-center flex-col">
+        <div class="relative glass-effect min-h-full w-5/6 flex justify-center flex-col" >
             <img src={album.cover_xl} alt="Couverture" class="object-cover mask-t-from-90% mask-b-to-99% mask-r-from-99% mask-l-from-99%"/>
-            <div class="absolute bottom-180 bg-white mask-r-from-80%">
+            <div class="absolute top-50 left-0 bg-pink-50/95 mask-r-from-80%">
                 <h1 class="font-extrabold text-black text-4xl m-10 mr-50">{album.title} - {album.artist.name}</h1>
             </div>
-            <div class="absolute bottom-0 w-full p-10 top-120">
-                <div class="m-5 w-full">
-                    <p>Genre : {#each album.genres.data as genre} {genre.name} {/each}</p>
+            <div class="absolute top-100 left-0 bottom-0 w-full p-10 pt-20 bg-gray-950/80 border-b rounded-4xl mask-t-from-90%">
+                <div class="m-5 p-5 w-full">
+                    <p>Genre : {#each album.genres.data as genre}   {genre.name} /  {/each}</p>
                     <p>Label : {album.label}</p>
                     <p>Date de sortie : {album.release_date}</p>
 
-                    <div class="m-5 overflow-y">
+                    <div class="mt-10 overflow-y">
                         <table class="table-auto w-2/3 text-gray-400 overflow-y-scroll">
                             <thead class="bg-neutral-900 uppercase font-medium border-b">
                             <tr>

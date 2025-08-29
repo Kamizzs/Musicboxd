@@ -26,6 +26,7 @@
 		"@prisma/client": "^6.9.0",
 		"bcryptjs": "^3.0.2",
 		"express": "^5.1.0",
+		"flowbite-svelte": "^1.13.4",
 		"node-fetch": "^3.3.2",
 		"siema": "^1.5.1"
 	},
